@@ -20,13 +20,6 @@ async function processarImagem() {
 
     if (!apiKey || !file) { alert("Preencha a chave e anexe a imagem."); return; }
     
-    // Verificação de segurança básica para ver se colou uma chave válida
-    if (!apiKey.startsWith("AIza")) {
-        status.innerText = "Erro: Chave inválida. Ela deve começar com AIza.";
-        status.style.color = "red";
-        return;
-    }
-    
     status.innerText = "Lendo os dados da imagem... Aguarde.";
     status.style.color = "#0078D7";
 
