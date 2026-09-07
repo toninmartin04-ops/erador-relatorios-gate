@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerador de Visuais - Gate</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f6f9; }
+        .controls { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h2 { margin-top: 0; color: #0c2c4d; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
+        input[type="password"], input[type="file"] { width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        button { background-color: #0c2c4d; color: white; border: none; padding: 12px 24px; cursor: pointer; border-radius: 5px; font-size: 16px; font-weight: bold; width: 100%; }
+        button:hover { background-color: #0078D7; }
+        #status { margin-top: 15px; font-weight: bold; color: #0078D7; text-align: center; }
+        
+        #relatorio-view { display: none; width: 100%; max-width: 1200px; margin: 0 auto; }
+        .charts-container { display: flex; width: 100%; }
+        .chart-box { flex: 1; padding: 30px; height: 450px; }
+        .light-blue { background-color: #0078D7; }
+        .dark-blue { background-color: #1A4971; }
+        
+        @media print {
+            body { padding: 0; background-color: white; }
+            .controls { display: none !important; }
+            #relatorio-view { display: block !important; max-width: 100%; }
+            @page { size: A4 landscape; margin: 0; }
+            .chart-box { height: 100vh; }
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <h2>Painel do Gate - Processamento de Imagem</h2>
+        <div class="input-group">
+            <label>Chave de Acesso (Google API Key):</label>
+            <input type="password" id="apiKey" placeholder="Cole sua chave AIza... aqui">
+        </div>
+        <div class="input-group">
+            <label>Anexar Imagem da Operação:</label>
+            <input type="file" id="imagemUpload" accept="image/*">
+        </div>
+        <button onclick="processarImagem()">Ler Imagem e Salvar PDF</button>
+        <div id="status"></div>
+    </div>
+
+    <div id="relatorio-view">
+        <div class="charts-container">
+            <div class="chart-box light-blue"><canvas id="graficoViagens"></canvas></div>
+            <div class="chart-box dark-blue"><canvas id="graficoMedia"></canvas></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
