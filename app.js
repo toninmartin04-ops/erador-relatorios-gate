@@ -31,11 +31,12 @@ async function processarImagem() {
         try {
             const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ contents: [{ parts: [{ text: promptTexto }, { inline_data: { mime_type: file.type, data: base64Image } }] }] })
+                body: JSON.stringify({ contents: [{ parts: [{ text: promptTexto }, { inlineData: { mimeType: file.type, data: base64Image } }] }] })
             });
             
             if (!response.ok) {
-                throw new Error(`Erro de conexão: ${response.status} ${response.statusText}`);
+                const err = await response.json();
+                throw new Error(`${response.status} - ${err.error?.message || response.statusText}`);
             }
 
             const result = await response.json();
@@ -53,7 +54,7 @@ async function processarImagem() {
             
             setTimeout(() => { window.print(); document.getElementById('relatorio-view').style.display = 'none'; status.innerText = ""; }, 1000);
         } catch (error) {
-            status.innerText = "Erro ao ler a imagem. Verifique se a imagem está nítida ou se a chave está correta. Detalhe: " + error.message;
+            status.innerText = "Erro na leitura. Detalhe: " + error.message;
             status.style.color = "red";
             console.error(error);
         }
